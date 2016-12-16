@@ -12,10 +12,10 @@ public class SolveEquation implements Problem {
     }
 
     @Override
-    public void mutate(Individual a) {
+    public void mutate(Individual a,double step) {
         double current = a.getDouble();
         double val;
-        double step = 0.01;
+      //  double step = 0.01;
 
         do {
             double rand = (Math.random() - .5) * 2; // -1 , 1

@@ -22,17 +22,20 @@ public class GA {
     }
 
     public void algorithm() {
+
         make_population();
 
         int i = 0;
         double old = -1;
 
-        System.out.println("#\tFitness\t\t\t\t\tData");
+//        System.out.println("#\tVariance\t\t\t\t\tBest");
+        System.out.println("#\tBest\t\t\t\tWorst\t\t\t\tAverage");
 
-        while (i++ < this.num_of_genarations) {
-            select_parent();
-            crossover();
-            select_population();
+
+            while (i++ < this.num_of_genarations) {
+                select_parent();
+                crossover(0.01);
+                select_population();
 
             double best = individuals.get(0).getFitness();
             double data = individuals.get(0).getDouble();
@@ -43,9 +46,11 @@ public class GA {
                 old = best;
             }
 
-            if (problem.check_fit_enough(individuals.get(0)))
-                return;
-        }
+
+//            System.out.println(i+"\t"+individuals.get(0).getFitness()+"\t"+individuals.get(this.populationSize-1).getFitness()+"\t"+average_fitness(individuals));
+                if (problem.check_fit_enough(individuals.get(0)))
+                    break;
+            }
 
     }
 
@@ -78,10 +83,10 @@ public class GA {
 
     }
 
-    private void crossover() {
+    private void crossover(double step) {
         for (int i = 0; i < parents.size() / 2; i++) {
             Individual child = problem.crossover(parents.get(i), parents.get(parents.size() - i - 1));
-            problem.mutate(child);
+            problem.mutate(child, step);
             individuals.add(child);
         }
     }
@@ -95,5 +100,15 @@ public class GA {
             x.add(individuals.get(i));
 
         individuals = x;
+    }
+
+    private double average_fitness(ArrayList<Individual> individuals) {
+
+        double sum = 0;
+        for (Individual i : individuals) {
+            sum += i.getFitness();
+        }
+
+        return sum / individuals.size();
     }
 }

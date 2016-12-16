@@ -7,7 +7,7 @@ public interface Problem {
 
     Individual crossover(Individual a,Individual b);
 
-    void mutate(Individual a);
+    void mutate(Individual a,double step);
 
     Individual create();
 
