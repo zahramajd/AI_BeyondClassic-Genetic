@@ -11,11 +11,18 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
+
 //        EightQueens eq = new EightQueens();
 //        eq.solve("sa");
 
         SolveEquation se=new SolveEquation();
-        GA g=new GA(se,200);
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Enter population size: ");
+        int size = reader.nextInt();
+        System.out.println("Enter number of generations: ");
+        int num_of_genarations=reader.nextInt();
+        GA g=new GA(se,size,num_of_genarations);
 
         g.algorithm();
 

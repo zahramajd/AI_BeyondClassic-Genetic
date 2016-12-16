@@ -28,7 +28,7 @@ public class SolveEquation implements Problem {
 
 
     public Individual create(Double val) {
-        double fitness = 1 / Math.abs(Math.sin(val) - Math.pow(val, 2) + val);
+        double fitness = 1 / (1 + Math.abs(Math.sin(val) - Math.pow(val, 2) + val));
         return new Individual(val, fitness);
     }
 
@@ -36,5 +36,16 @@ public class SolveEquation implements Problem {
     public Individual create() {
         return create((Math.random() * (3.14 - .2)) + 0.2);
     }
+
+    @Override
+    public boolean check_fit_enough(Individual individual) {
+
+        double val = individual.getDouble();
+        if (Math.abs(Math.sin(val) - Math.pow(val, 2) + val) < 0.001)
+            return true;
+
+        return false;
+    }
+
 
 }

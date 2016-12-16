@@ -11,4 +11,6 @@ public interface Problem {
 
     Individual create();
 
+    boolean check_fit_enough(Individual individual);
+
 }

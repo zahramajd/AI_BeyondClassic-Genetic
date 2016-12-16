@@ -13,22 +13,23 @@ public class GA {
     ArrayList<Individual> parents = new ArrayList<>();
     ArrayList<Individual> individuals = new ArrayList<Individual>();
     Problem problem;
+    int num_of_genarations;
 
-    public GA(Problem problem, int populationSize) {
+    public GA(Problem problem, int populationSize, int num_of_genarations) {
         this.populationSize = populationSize;
         this.problem = problem;
+        this.num_of_genarations = num_of_genarations;
     }
 
     public void algorithm() {
         make_population();
 
         int i = 0;
-
         double old = -1;
 
         System.out.println("#\tFitness\t\t\t\t\tData");
 
-        while (i++ < 1000) {
+        while (i++ < this.num_of_genarations) {
             select_parent();
             crossover();
             select_population();
@@ -38,9 +39,12 @@ public class GA {
 
             if (best != old) {
                 //System.out.println(i + "\t" + best + "\t" + data);
-                System.out.println(i + "\t" + Math.round((best * 100) / 92967) + "%\t" + data);
+                System.out.println(i + "\t" + best + "\t" + data);
                 old = best;
             }
+
+            if (problem.check_fit_enough(individuals.get(0)))
+                return;
         }
 
     }
